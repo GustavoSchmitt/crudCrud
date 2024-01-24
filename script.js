@@ -18,23 +18,6 @@ function createElement(tag, attributes = {}, content) {
   return element;
 }
 
-function createTask() {
-  const taskInput = document.getElementById('task');
-  const categoryInput = document.getElementById('category');
-  const dateInput = document.getElementById('date');
-
-  const taskText = taskInput.value.trim();
-  const taskCategory = categoryInput.value;
-  const taskDate = dateInput.value;
-
-  if (!taskText || !taskCategory || !taskDate) {
-    alert('Por favor, preencha todos os campos obrigatórios.');
-    return;
-  }
-
-  postTask({ text: taskText, category: taskCategory, date: taskDate })
-}
-
 function cleanForm() {
   const taskInput = document.getElementById('task');
   const categoryInput = document.getElementById('category');
@@ -151,5 +134,5 @@ function updateClock() {
 
 function formatDate(dateString) {
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString(undefined, options);
+  return new Date(dateString).toLocaleDateString('pt-br', options);
 }

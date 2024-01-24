@@ -1,4 +1,4 @@
-const chave = '6b112eb458064bf3a2a6f2478228a92f/tasks';
+const chave = '85947ab8782342ca8eb51b7ee2573441/tasks';
 const apiUrl = `https://crudcrud.com/api/${chave}`;
 
 
@@ -82,19 +82,34 @@ function deleteTask(taskId) {
         .catch(error => console.error('Erro ao excluir tarefa:', error));
 }
 
-function postTask(data){
+function postTask() {
+    const taskInput = document.getElementById('task');
+    const categoryInput = document.getElementById('category');
+    const dateInput = document.getElementById('date');
+
+    const taskText = taskInput.value.trim();
+    const taskCategory = categoryInput.value;
+    const taskDate = dateInput.value;
+
+    if (taskText === '') {
+      alert('Por favor, insira uma tarefa válida.');
+      return;
+    }
+
     fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Tarefa criada:', data);
-        cleanForm()
-        fetchTasks();
-      })
-      .catch(error => console.error('Erro ao criar tarefa:', error));
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text: taskText, category: taskCategory, date: taskDate }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Tarefa criada:', data);
+      taskInput.value = '';
+      categoryInput.value = 'trabalho'; // Reinicia para a opção padrão
+      dateInput.value = '';
+      fetchTasks();
+    })
+    .catch(error => console.error('Erro ao criar tarefa:', error));
 }
